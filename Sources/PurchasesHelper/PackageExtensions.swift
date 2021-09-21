@@ -4,9 +4,10 @@
 //  Copyright © 2020 Cody Kerns. All rights reserved.
 //
 
-import Purchases
+import StoreKit
+import RevenueCat
 
-public extension Purchases.Package {
+public extension RevenueCat.Package {
     
     /// Customer-facing payment terms for a RevenueCat package. Not localized.
     /// - Parameter isRecurring: If the terms should be in a recurring format. `$99/year` vs `$99 for 1 year`. Defaults to `true`.
@@ -67,14 +68,14 @@ public extension Purchases.Package {
     }
 }
 
-public extension Array where Element: Purchases.Package {
+public extension Array where Element: RevenueCat.Package {
     enum SortedPackageType {
         case timeAscending
         case timeDescending
         case hasIntroductoryPrice
     }
     
-    func sorted(by type: SortedPackageType = .timeAscending) -> [Purchases.Package] {
+    func sorted(by type: SortedPackageType = .timeAscending) -> [RevenueCat.Package] {
         switch type {
         case .timeAscending:
             // weekly -> monthly -> yearly
@@ -129,7 +130,7 @@ fileprivate extension SKProduct.PeriodUnit {
     }
 }
 
-public extension Purchases.Package {
+public extension RevenueCat.Package {
     fileprivate var packagePerTitle: String {
         switch self.packageType {
         case .lifetime: return "lifetime"

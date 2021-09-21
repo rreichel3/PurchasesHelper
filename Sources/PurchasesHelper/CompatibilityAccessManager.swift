@@ -5,7 +5,8 @@
 //
 
 import Foundation
-import Purchases
+import UIKit
+import RevenueCat
 
 public class CompatibilityAccessManager {
     public static let shared = CompatibilityAccessManager()
@@ -46,7 +47,7 @@ public class CompatibilityAccessManager {
     /**
      Optional configuration call to set entitlement versions as well as restore transactions if a receipt is available. **IMPORTANT**: this method should be called *after* you initialize the Purchases SDK.
      */
-    public func syncReceiptIfNeededAndRegister(entitlements: [BackwardsCompatibilityEntitlement], completion: ((Purchases.PurchaserInfo?) -> Void)? = nil) {
+    public func syncReceiptIfNeededAndRegister(entitlements: [BackwardsCompatibilityEntitlement], completion: ((RevenueCat.PurchaserInfo?) -> Void)? = nil) {
         
         entitlements.forEach { (entitlement) in
             self.register(entitlement: entitlement)
@@ -92,7 +93,7 @@ public class CompatibilityAccessManager {
         
     }
     
-    public func entitlementIsActiveWithCompatibility(entitlement: String, result: @escaping ((Bool, Purchases.PurchaserInfo?) -> Void)) {
+    public func entitlementIsActiveWithCompatibility(entitlement: String, result: @escaping ((Bool, RevenueCat.PurchaserInfo?) -> Void)) {
         
         self.log("Checking access to entitlement '\(entitlement)'")
         
@@ -155,7 +156,7 @@ public class CompatibilityAccessManager {
     }
 }
 
-extension Purchases.PurchaserInfo {
+extension RevenueCat.PurchaserInfo {
     public func entitlementIsActiveWithCompatibility(entitlement: String, shouldCheckRegisteredCompatibilityVersions: Bool = true) -> Bool {
         /// If a user has access to an entitlement, return true
         if self.entitlements[entitlement]?.isActive == true {
